@@ -5,52 +5,43 @@ using System.Text;
 using System.Threading.Tasks;
 namespace CSharpSandBox
 {
-	class Program { 
+	class Program
+	{
 		static void Main(string[] args)
 		{
-			double convert(int Input,double Sec) {
-			if (Input == 1) return Sec / 3600; //To Hours
-			else if (Input == 2) return Sec / 60; //To minutes
-			else if (Input == 3) return Sec; //To seconds
-			else{
-				Console.WriteLine("Wrong input");
-				return 0;
+			bool first = true;
+			int mult = 1;
+			void factor(int value) {
+				if (value != 1)
+				{
+					mult++;
+					while (value % mult == 0)
+					{
+						if (first) { Console.Write($"{value} = {mult}"); first = false; }
+						else Console.Write($"*{mult}");
+						value /= mult;
+					}
+					factor(value);
+				}
+				Console.WriteLine();
 			}
-		}
-			void convert_menu()
-            {
-				Console.WriteLine("Awaiting input (sec)...");
-				double sec = Convert.ToDouble(Console.ReadLine());
-				Console.WriteLine(
-					"Press 1 to transfer {0} seconds to hours, \n" +
-					"2 to transfer to minutes, \n" +
-					"3 to transfer to seconds", sec
-					);
-				int input = Convert.ToInt32(Console.ReadLine());
-
-				Console.Write("{0} seconds is " + convert(input, sec), sec);
-				if (input == 1) Console.WriteLine(" hour(s)");
-				else if (input == 2) Console.WriteLine(" minute(s)");
-				else if (input == 3) Console.WriteLine(" second(s) (obviously)");
+			void SqEq(double a, double b, double c)
+			{
+				Console.WriteLine($"{a}x2 + {b}x + c = 0");
+				double d = (b * b) - 4 * a * c;
+				if (d == 0) Console.WriteLine(-b / 2 * a);
+				else if (d > 0)
+				{
+					double x1 = (-b + Math.Sqrt(d)) / (2 * a);
+					double x2 = (-b - Math.Sqrt(d)) / (2 * a);
+					Console.WriteLine($"x1= {x1}" +
+									$"\nx2 = {x2};");
+				}
+				else if (d < 0) Console.WriteLine("Корней уравненея нет");
 			}
-			void llength()
-            {
-				Console.WriteLine("\nAwaiting input (length)...");
-				double length = Convert.ToDouble(Console.ReadLine());
-				Console.WriteLine(length / (2 * 3.14));
-            }
-			//int sum(int a) {return не могу сделать это задание, простите(}
-			//float foo = 1;
-			//foo /= 3;
-			//Console.WriteLine("foo = {0}", foo);
-			//foo *= 3;
-			//Console.WriteLine("foo = {0}", foo);
-
-			////////////////////////////////////////////////////////////////////////
-			convert_menu();
-			llength();
 			
-			
+			//SqEq(1,100,3); //квадратное уравнение
+			//factor(100);   //разложение на множители
 		}
 	}
 }
