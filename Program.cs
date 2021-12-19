@@ -6,189 +6,185 @@ using System.Text;
 using System.Threading.Tasks;
 namespace CSharpSandBox
 {
-	struct car
-	{
-		private double clearance;
-		private double eng_vol;//объём двигателя
-		private double eng_power;//мощность двигателя
-		private double wheel_d;
-		private int color_id;
-		private string[] color;
-		private string[] shifter;
-		private int shifter_id;
-		public void print()
-		{
-			if (eng_vol == 0) eng_vol = 3.0;//типа конструктор по умолчанию, простите за костыль, т.к. в C# нельзя переопределить конструктор по умолчанию, я решил сделать так
-			if (clearance == 0) clearance = 130;
-			if (eng_power == 0) eng_power = 225;
-			if (wheel_d == 0) wheel_d = 15;
-			if (color_id == 0)
-			{
-				color = new string[3] { "Красный", "Зелёный", "Жёлтый" };
-				Random r = new Random();
-				color_id = r.Next(0, 3);
-			}
-			if (shifter_id == 0)
-			{
-				Random r = new Random();
-				shifter_id = r.Next(0, 2);
-				shifter = new string[2] { "Механическая", "Автоматическая" };
-			}
-			Console.WriteLine(
-				$"Высота подвески(мм): {clearance}\n" +
-				$"Объём двигателя(л): {eng_vol}\n" +
-				$"Мощность двигателя(л.с.) {eng_power}\n" +
-				$"Диаметр колеса: { wheel_d} \n" +
-				$"Цвет: {color[color_id]}\n" +
-				$"Тип коробки передач: {shifter[shifter_id]}");
-		}
-		public double getset_clearence
-		{
-			get { return clearance; }
-			set { clearance = value; }
-		}
-		public double getset_eng_vol
-		{
-			get { return eng_vol; }
-			set { eng_vol = value; }
-		}
-		public double getset_eng_power
-		{
-			get { return eng_power; }
-			set { eng_power = value; }
-		}
-		public string getset_color
-		{
-			get { return color[color_id]; }
-			set { color[color_id] = value; }
-		}
-		public double getset_wheel_d
-		{
-			get { return wheel_d; }
-			set { wheel_d = value; }
-		}
-		public string getset_shifter
-		{
-			get { return shifter[shifter_id]; }
-			set { shifter[shifter_id] = value; }
-		}
-	}
-	partial class carr
-	{
-		private string name;
-		private double clearance;
-		private double eng_vol;//объём двигателя
-		private double eng_power;//мощность двигателя
-		private static double wheel_d;
-		private string color;
-		private static string shifter;
-		public carr(string name, double clearence, double eng_vol, double eng_power, string color)
-		{
-			this.name = name;
-			this.clearance = clearence; 
-			this.eng_power = eng_power;
-			this.eng_vol = eng_vol;
-			this.color = color;
-		}
-        public carr()
-        {
-			name = "Машина без названия";
-			clearance = 130;
-			eng_power = 225;
-			eng_vol = 3.0;
-			color = "Белый";
-			shifter = "Автоматическая";
-        }
-		partial void partial_method();
-		public void obvertka() { partial_method(); } //для того чтобы вызвать частичный метод, т.к. его нельзя сделать публичным
-		static carr()
-        {
-			shifter = "Механическая";
-			wheel_d = 15;
-        }
-		public void print()
-		{
-			Console.WriteLine(
-				$"\n--------------------------------------\n" +
-				$"Название автомобиля: {name}\n" +
-				$"Высота подвески(мм): {clearance}\n" +
-				$"Объём двигателя(л): {eng_vol}\n" +
-				$"Мощность двигателя(л.с.) {eng_power}\n" +
-				$"Диаметр колеса: { wheel_d} \n" +
-				$"Цвет: {color}\n" +
-				$"Тип коробки передач: {shifter}");
-		}
-		public double getset_clearence
-		{
-			get { return clearance; }
-			set { clearance = value; }
-		}
-		public double getset_eng_vol
-		{
-			get { return eng_vol; }
-			set { eng_vol = value; }
-		}
-		public double getset_eng_power
-		{
-			get { return eng_power; }
-			set { eng_power = value; }
-		}
-		public string getset_color
-		{
-			get { return color; }
-			set { color = value; }
-		}
-		public double getset_wheel_d
-		{
-			get { return wheel_d; }
-			set { wheel_d = value; }
-		}
-		public string getset_shifter
-		{
-			get { return shifter; }
-			set { shifter = value; }
-		}
-		public string getset_name {
-			get { return name; }
-			set { name = value; }
-		}
-	}
 	class Program
 	{
-		static void structs()
-        {
-			car SUPRA = new car();
-			Console.WriteLine("Супра до тюнинга: ");
-			SUPRA.print();
-			SUPRA.getset_clearence = 20;
-			SUPRA.getset_color = "Фиолетовый";
-			SUPRA.getset_shifter = "Автомат";
-			SUPRA.getset_eng_vol = 4;
-			SUPRA.getset_eng_power = 300;
-			Console.WriteLine("\nСупра после тюнинга: ");
-			SUPRA.print();
-        }
+		protected abstract class figure
+		{
+			protected double a;
+			abstract public double S();
+			abstract public double P();
+			public abstract void print();
+
+		}
+		protected class triangle : figure
+		{
+			protected double b, c;
+			public triangle(double a, double b, double c)
+			{
+				this.a = a;
+				this.b = b;
+				this.c = c;
+			}
+			public override double S()
+			{
+				double p = (a + b + c) / 2;
+				double h = (2 * Math.Sqrt(p * (p - a) * (p - b) * (p - c))) / a;
+
+				return 0.5 * (a * h);
+			}
+			public override double P()
+			{
+				return a + b + c;
+			}
+			public override void print()
+			{
+				Console.WriteLine(($"Периметр треугольника: {P()} \nПлощадь треугольника: {S()}"));
+			}
+		}
+		protected class sq : figure
+		{
+			public sq(double a)
+			{
+				this.a = a;
+			}
+			public override double S()
+			{
+				return a * a;
+			}
+			public override double P()
+			{
+				return a * 4;
+			}
+			public override void print()
+			{
+				Console.WriteLine($"Площадь квадрата: {S()}\nПериметр квадрата: {P()}");
+			}
+
+		}
+		protected class rhomb : figure
+		{
+			double alpha;
+			public rhomb(double a, double alpha)
+			{
+				this.a = a;
+				this.alpha = alpha;
+			}
+			public override double S()
+			{
+				alpha *= Math.PI / 180; //Чтобы перевести в радианы, т.к. sin читает только радианы
+				return Math.Sin(alpha);
+			}
+			public override double P()
+			{
+				return 4 * a;
+			}
+			public override void print()
+			{
+				Console.WriteLine($"Площадь ромба: {S()}\nПериметр ромба: {P()}");
+			}
+		}
+		protected class rect : figure
+		{
+			protected double b;
+			public rect(double a, double b)
+			{
+				this.a = a;
+				this.b = b;
+			}
+			public override double S()
+			{
+				return a * b;
+			}
+			public override double P()
+			{
+				return (a + b) * 2;
+			}
+			public override void print()
+			{
+				Console.WriteLine($"Площадь прямоугольника: {S()}\nПериметр прямоугольника: {P()}");
+			}
+		}
+		protected class parall : figure // параллелограмм
+		{
+			protected double b;
+			protected double h;
+			public parall(double a, double b, double h)
+			{
+				this.a = a;
+				this.b = b;
+				this.h = h;
+			}
+
+			public override double P()
+			{
+				return 2 * (a + b);
+			}
+			public override double S()
+			{
+				return a * h;
+			}
+			public override void print()
+			{
+				Console.WriteLine($"Площадь параллелограма: {S()}\nПериметр параллелограма: {P()}");
+			}
+		}
+		protected class trapezoid : figure
+		{
+			protected double b, c, d, h;
+			public trapezoid(double a, double b, double c, double d, double h)
+			{
+				this.a = a;
+				this.b = b;
+				this.c = c;
+				this.d = d;
+				this.h = h;
+			}
+
+			public override double P()
+			{
+				return a + b + c + d;
+			}
+			public override double S()
+			{
+				return 0.5 * h * (a + b);
+			}
+			public override void print()
+			{
+				Console.WriteLine($"Площадь трапеции: {S()}\nПериметр трапеции: {P()}");
+			}
+		}
+
 		static void Main(string[] args)
 		{
-			//structs(); //Структура
-			//Класс:
-			carr supra = new carr();
-			supra.getset_name = "Toyota Supra";
-			supra.print();
-			supra.getset_clearence = 50; supra.getset_shifter = "Автоматическая";
-			supra.print();
-			carr VAZ_2107 = new carr("ВАЗ 2107",50,1.5,8,"Чёрный");
-			VAZ_2107.print();
-			VAZ_2107.getset_shifter = "Механическая";
-			VAZ_2107.print();
-			carr[] car_arr = new carr[5];
-			Console.WriteLine("Машины из массива: ");
-			for (int i = 0; i < car_arr.Length; i++)
-			{
-				car_arr[i] = new carr();
-				car_arr[i].print();
-			}
-			supra.obvertka();
+			triangle tri = new triangle(11,11,11);
+			tri.print();
+
+			Console.WriteLine();
+
+			sq square = new sq(2);
+			square.print();
+
+
+			Console.WriteLine();
+
+			rhomb r = new rhomb(3, 90);
+			r.print();
+			rect rect = new rect(3, 2);
+
+			Console.WriteLine();
+			rect.print();
+			Console.WriteLine();
+
+			parall p = new parall(2, 3, 5);
+			p.print();
+
+			Console.WriteLine();
+
+			trapezoid t = new trapezoid(2, 4, 6, 8, 5);
+			t.print();
+
+			Console.WriteLine("Массив:");
+			figure[] fig = { square, t};
 		}
 	}
 }
