@@ -182,9 +182,6 @@ namespace CSharpSandBox
 
 			trapezoid t = new trapezoid(2, 4, 6, 8, 5);
 			t.print();
-
-			Console.WriteLine("Массив:");
-			figure[] fig = { square, t};
 		}
 	}
 }
