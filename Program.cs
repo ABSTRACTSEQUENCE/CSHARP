@@ -7,14 +7,22 @@ namespace CSharpSandBox
         static void Main(string[] args)
         {
             Money cash = new Money(100);
-            Console.Write($"У вас есть "); cash.print();
-            cash = cash - 100.201M;
-            cash.print();
-            cash++;
-            cash.print();
-            Money dengi = new Money(5.5);
-            Console.Write(dengi == cash);
+            Console.Write($"У вас есть ");Console.WriteLine(cash.ToString());
+            try
+            {
+                cash -= 1000.5M;
+                if (cash < 0)
+                    throw new Bankrupt();
+            }
+            catch(Bankrupt b)
+            {
+                Console.WriteLine(b.msg);
+                Console.WriteLine(b.time);
+
+            }
+            Console.WriteLine(cash.ToString());
             
+                    
         }
     }
 }

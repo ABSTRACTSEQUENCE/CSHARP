@@ -9,7 +9,7 @@ namespace CSharpSandBox
     class Money
     {
         int rub;
-        double kop;
+        int kop;
 
         public Money(int rub, int kop = 0)
         {
@@ -24,41 +24,34 @@ namespace CSharpSandBox
             kop = Convert.ToInt32(str[1]);
         }
 
-        public void print()
-        {
-            if (kop > 0)
-                Console.WriteLine($"Баланс: {rub} рублей {kop} копеек");
-            else
-                Console.WriteLine($"Баланс: {rub} рублей");
-        }
         static public Money operator +(Money a, int b)
         {
             Console.WriteLine($"Пополнение на {b} рублей");
-            a.rub += b;
-            return a;
+            Money value = new Money(a.rub + b, a.kop);
+            return value;
         }
         static public Money operator +(Money a, decimal b)
         {
             string[] str;
             str = b.ToString().Split(',');
-            a.kop = Convert.ToInt32(str[1]);
-            a.rub += Convert.ToInt32(str[0]);
-            if (a.kop >= 100){
-                while (a.kop >= 100) {
-                    a.kop -= 100;
-                    a.rub++;
+            Money value = new Money(a.rub + Convert.ToInt32(str[0]), Convert.ToInt32(str[1]));
+            if (value.kop >= 100){
+                while (value.kop >= 100) {
+                    value.kop -= 100;
+                    value.rub++;
                 }
             }
             Console.Write($"Пополнение на  {str[0]} рублей");
-            if (a.kop > 0)
+            if (value.kop > 0)
                 Console.WriteLine($" {str[1]} копеек");
             else Console.WriteLine();
-            return a;
+            return value;
         }
         static public Money operator -(Money a, int b)
-        {  
-            a.rub -= b;
-            return a;
+        {
+            Console.WriteLine($"Пополнение на {b} рублей");
+            Money value = new Money(a.rub - b, a.kop);
+            return value;
         }
         static public Money operator -(Money a, decimal b)
         {
@@ -156,6 +149,18 @@ namespace CSharpSandBox
 
             else return true;
         }
+        static public bool operator > (Money a, int b)
+        {
+            if (a.rub > b)
+                return true;
+            else return false;
+        }
+        static public bool operator <(Money a, int b)
+        {
+            if (a.rub < b)
+                return true;
+            else return false;
+        }
         static public bool operator <(Money a, Money b)
         {
             if (a.rub == b.rub && a.kop < b.kop)
@@ -176,6 +181,14 @@ namespace CSharpSandBox
             if (a.rub == b.rub && a.kop == b.kop)
                 return false;
             else return true;
+        }
+
+        public override string ToString()
+        {
+                if (kop > 0)
+                return $"Баланс: {rub} рублей {kop} копеек";
+                else
+                return $"Баланс: {rub} рублей"; ;
         }
     }
 }
