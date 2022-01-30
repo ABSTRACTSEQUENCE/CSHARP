@@ -12,7 +12,7 @@ namespace CSharpSandBox
             tree.Add(100);
             tree.Add(1);
             tree.search(100);
-            Console.WriteLine(tree.bool_search(1));
+           // Console.WriteLine(tree.bool_search(1));
 
             tree.print();
         }

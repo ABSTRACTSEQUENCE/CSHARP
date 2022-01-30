@@ -71,10 +71,10 @@ namespace CSharpSandBox
         {
 			search(data, root);
         }
-		public bool bool_search(int data)
-        {
-			return bool_search(data, root);
-        }
+		//public bool bool_search(int data)
+  //      {
+		//	//return bool_search(data, root);
+  //      }
 		private void search(int data, Element root) //Данный метод баганный, т.к. дублирует код по 2 раза из за рекурсии, я не придумал как это предотвратить
 		{
 			if (this.root == null)
@@ -107,32 +107,32 @@ namespace CSharpSandBox
 				}
             }
 		}
-		private bool bool_search(int data, Element root)
-        {
-			//Решил сделать ещё один search метод, который возвращает true если элемент найден и false если не найден
-			if (this.root == null)
-				return false;
-			else
-			{
-				if (root.data == data)
-					return true;
-				else if (root.data != data)
-				{
-					if (root.left == null && root.right == null)
-						return false;
+		//private bool bool_search(int data, Element root)
+  //      {
+		//	//Решил сделать ещё один search метод, который возвращает true если элемент найден и false если не найден
+		//	if (this.root == null)
+		//		return false;
+		//	else
+		//	{
+		//		if (root.data == data)
+		//			return true;
+		//		else if (root.data != data)
+		//		{
+		//			if (root.left == null && root.right == null)
+		//				return false;
 
-					else if (root.left != null)
-					{
-						bool_search(data, root.left);
-						return false;
-					}
-					else if (root.right != null)
-					{
-						bool_search(data, root.right);
-						return false;
-					}
-				}
-			}
-        }
+		//			else if (root.left != null)
+		//			{
+		//				bool_search(data, root.left);
+		//				return false;
+		//			}
+		//			else if (root.right != null)
+		//			{
+		//				bool_search(data, root.right);
+		//				return false;
+		//			}
+		//		}
+		//	}
+  //      }
 	}
 }
