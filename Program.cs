@@ -6,23 +6,15 @@ namespace CSharpSandBox
     {
         static void Main(string[] args)
         {
-            Money cash = new Money(100);
-            Console.Write($"У вас есть ");Console.WriteLine(cash.ToString());
-            try
-            {
-                cash -= 1000.5M;
-                if (cash < 0)
-                    throw new Bankrupt();
-            }
-            catch(Bankrupt b)
-            {
-                Console.WriteLine(b.msg);
-                Console.WriteLine(b.time);
+            Tree tree = new Tree();
+            tree.Add(5);
+            tree.Add(6);
+            tree.Add(100);
+            tree.Add(1);
+            tree.search(100);
+            Console.WriteLine(tree.bool_search(1));
 
-            }
-            Console.WriteLine(cash.ToString());
-            
-                    
+            tree.print();
         }
     }
 }
