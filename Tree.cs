@@ -6,35 +6,41 @@ using System.Threading.Tasks;
 
 namespace CSharpSandBox
 {
-	class Tree
+	class Tree <T> where T : IComparable<T>
 	{
-		private Element root = null;
+		private Element<T> root = null;
 
-		public Tree(Element root = null)
+		public Tree(Element<T> root = null)
 		{
 			this.root = root;
 			Console.WriteLine($"Binary tree created");
 		}
 
-		public void Add(int data)
+		public void Add(T data)
         {
 			Add(data, root);
         }
-		private void Add(int data, Element root)
+		private void Add(T data, Element<T> root)
 		{
 			if (this.root == null)
-				this.root = new Element(data);
-			else if(root.data > data)
+				this.root = new Element<T>(data);
+			else if(root.data.CompareTo(data) <0) 
             {
 				if (root.left == null)
-					root.left = new Element(data);
+				{
+					root.left = new Element<T>(data);
+					root.left.parent = root;
+				}
 				else
 					Add(data, root.left);
             }
-			else if (root.data < data)
+			else if (root.data.CompareTo(data) > 0)
             {
 				if (root.right == null)
-					root.right = new Element(data);
+				{
+					root.right = new Element<T>(data);
+					root.right.parent = root;
+				}
 				else
 					Add(data, root.right);
 			}
@@ -44,7 +50,7 @@ namespace CSharpSandBox
         {
 			print(root);
         }
-		private void print(Element root)
+		private void print(Element<T> root)
 		{
 			if (this.root == null)
 				Console.WriteLine("Empty tree");
@@ -63,76 +69,11 @@ namespace CSharpSandBox
 
                 }
 			}
-			
-				
-			
-		}//not done yet
-		public void search(int data)
-        {
-			search(data, root);
-        }
-		//public bool bool_search(int data)
-  //      {
-		//	//return bool_search(data, root);
-  //      }
-		private void search(int data, Element root) //Данный метод баганный, т.к. дублирует код по 2 раза из за рекурсии, я не придумал как это предотвратить
-		{
-			if (this.root == null)
-				Console.WriteLine("This tree is empty");
-			else if (root.data == data)
-			{
-				Console.Write(
-					$"Element with data {data} is found.\n" +
-					$"Left element ");
-				if (root.left != null)
-					Console.Write($"= {root.left.data}\n");
-				else if(root.left == null) 
-					Console.WriteLine(" does not exist");
-
-				Console.Write($"Right element ");
-				if (root.right != null)
-					Console.Write($"= {root.right.data}\n");
-				else if(root.right == null) 
-					Console.WriteLine(" does not exist");
-			}
-			else if (root.data != data)
-            {
-				if (root.left != null)
-					search(data, root.left);
-				if (root.right != null)
-					search(data, root.right);
-				else if (root.left == null && root.right == null)
-				{
-					Console.WriteLine($"Element with data {data} does not exist");
-				}
-            }
 		}
-		//private bool bool_search(int data, Element root)
-  //      {
-		//	//Решил сделать ещё один search метод, который возвращает true если элемент найден и false если не найден
-		//	if (this.root == null)
-		//		return false;
-		//	else
-		//	{
-		//		if (root.data == data)
-		//			return true;
-		//		else if (root.data != data)
-		//		{
-		//			if (root.left == null && root.right == null)
-		//				return false;
-
-		//			else if (root.left != null)
-		//			{
-		//				bool_search(data, root.left);
-		//				return false;
-		//			}
-		//			else if (root.right != null)
-		//			{
-		//				bool_search(data, root.right);
-		//				return false;
-		//			}
-		//		}
-		//	}
-  //      }
+		public Element<T> search(T data)
+        {
+			return root.search(data);
+        }
+		
 	}
 }
