@@ -1,6 +1,7 @@
 ﻿
-
+using System.Collections.Generic;
 using System;
+using System.Linq;
 namespace CSharpSandBox
 {
 
@@ -8,69 +9,25 @@ namespace CSharpSandBox
 	{
 		static void Main(string[] args)
 		{
-			Money usd = new Money("usd", 1);
-			Money eur = new Money("eur", 30);
-			Money rub = new Money("rub", 100);
-			Money.MoneyConvertDel del = null;
-			del += delegate (double amount, string code) // rub
-			{
-				switch (code.ToLower())
-				{
-					case "rub":
-						return amount;
-					case "usd":
-						return amount * 0.013336;
-					case "eur":
-						return amount * 0.011715;
-					default: return 0;
+			Car supra = new Car("Toyota Supra", 2000000, 225);
+			Car priora = new Car("LADA priora", 288000, 98);
+			Car lamba = new Car("Lamborghini Gallardo", 14500000, 560);
+			Car v_2101 = new Car("LADA 2101", 200000, 64);
+			List<Car> cars = new List<Car>() { supra, priora, lamba, v_2101 };
 
-				}
-			};
-			del += delegate (double amount, string code) // usd
-			{
-				switch (code.ToLower())
-				{
-					case "rub":
-						return amount * 74;
-					case "usd":
-						return amount;
-					case "eur":
-						return amount * 0.88106;
-					default: return 0;
-
-				}
-			};
-			del += delegate (double amount, string code) // eur
-			{
-				switch (code.ToLower())
-				{
-					case "rub":
-						return amount * 85.36;
-					case "usd":
-						return amount * 1.14;
-					case "eur":
-						return amount;
-					default: return 0;
-
-				}
-
-				Console.WriteLine(rub.Call(del, "rub"));
-			};
-			del += (double amount, string code) =>
-			{
-				 switch (code.ToLower())
-				 {
-					 case "rub":
-						 return amount * 142736.01;
-					 case "usd":
-						 return amount * 1858.70;
-					 case "eur":
-						 return amount * 1637.58;
-					 default: return 0;
-				 }
-			};
-			Console.WriteLine(usd.Call(del, "usd"));
-			Console.WriteLine(del.GetInvocationList()[3].DynamicInvoke(1, "usd"));//Конвертация валюты в золото
+///////////////////////////Вывести данные об автомобилях на экран////////////////////////////////
+			Console.WriteLine("Вывести данные об автомобилях на экран\n");
+			var linq = from i in cars select i;
+			foreach (Car i in linq)
+			Console.WriteLine(
+				$"Марка: {i.brand}\n" +
+				$"Мощность: {i.power} л.с.\n" +
+				$"Стоимость: {i.price} руб\n");
+//////////////////Сделать выборку автомобилей ценой более 1 000 000 руб. Вывести данные на экран.
+			Console.WriteLine("Сделать выборку автомобилей ценой более 1 000 000 руб. Вывести данные на экран.\n");
+			linq = from i in cars where i.price >= 1000000 select i;
+            foreach (Car i in linq)
+			Console.WriteLine($"{i.brand}: {i.price}");
 		}
 	} 
 }
